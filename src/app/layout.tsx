@@ -15,12 +15,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head />
       <body className="bg-foreground mx-1 md:mx-4 my-2">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="w-full h-[98vh] bg-background rounded-xl pt-4">
+          <div className="w-full h-[98vh] bg-background rounded-xl pt-4 flex flex-col">
             <AppBar />
-            {children}
+            <main className="flex-grow overflow-x-hidden">{children}</main>
           </div>
         </ThemeProvider>
       </body>

@@ -10,11 +10,11 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
+    --background: 40, 82%, 98%;
     --foreground: 0, 0%, 12%;
-    --card: 0 0% 100%;
+    --card: 40, 82%, 98%;
     --card-foreground: 0, 0%, 12%;
-    --popover: 0 0% 100%;
+    --popover: 40, 82%, 98%;
     --popover-foreground: 0, 0%, 12%;
     --primary: 358, 100%, 72%;
     --primary-foreground: 60 9.1% 97.8%;
@@ -83,3 +83,35 @@
   --warning: 48 96% 89%;
   --warning-foreground: 38 92% 50%;
 } */
+@keyframes wave {
+  0% {
+    transform: rotate(0deg);
+  }
+  10% {
+    transform: rotate(14deg);
+  }
+  20% {
+    transform: rotate(-8deg);
+  }
+  30% {
+    transform: rotate(14deg);
+  }
+  40% {
+    transform: rotate(-4deg);
+  }
+  50% {
+    transform: rotate(10deg);
+  }
+  60% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+
+.animate-wave {
+  animation: wave 2.5s infinite;
+  transform-origin: 70% 70%;
+  display: inline-block;
+}
