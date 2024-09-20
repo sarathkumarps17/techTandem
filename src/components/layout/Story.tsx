@@ -10,9 +10,9 @@ import ourStoryImg from "@/assets/couple_story.svg";
 
 function Story() {
   return (
-    <article className="flex items-center justify-around container h-[80vh] w-[90vw] py-28 px-16 mx-auto rounded-xl shadow-md dark:shadow-black mt-10 ">
-      <div className="leading-loose text-xl h-full basis-1/2 flex flex-col justify-center">
-        <h1 className="text-3xl block mb-6">
+    <article className="flex items-center justify-around container md:h-[30rem] md:w-[80rem] h-[25rem] w-[30rem] md:py-28 py-4 md:px-16 px-4 sm:py-14 sm:px-8 mx-auto rounded-xl shadow-md dark:shadow-black my-10">
+      <div className="leading-loose md:text-xl  md:basis-1/2 flex flex-col md:justify-center justify-center text-wrap">
+        <h1 className="md:text-3xl text-xl sm:text-2xl block mb-6">
           <span
             className="inline-block animate-wave cursor-default"
             role="img"
@@ -22,7 +22,7 @@ function Story() {
           </span>{" "}
           Hi, Welcome to TechTandem!
         </h1>
-        <div className="text-justify">
+        <div className="md:text-justify text-balance">
           <span className="pl-12">We are </span>
           <span className="font-bold">Sarath </span>and{" "}
           <span className="font-bold">Anjaly</span>, a tech duo in web

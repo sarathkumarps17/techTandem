@@ -9,7 +9,9 @@ import ThemeSwitch from "../Theme/ThemeSwitch";
 import { Player } from "@lordicon/react";
 import CONVERSATION from "@/assets/conversation.json";
 import { useTheme } from "next-themes";
-import { navItems } from "@/lib/constants";
+import { useScroll } from "./ScrollProvider";
+
+const sections = ["story", "works", "skills", "certifications", "connect"];
 
 export default function AppBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,6 +19,7 @@ export default function AppBar() {
   const { theme } = useTheme();
   const isDark = theme === "dark";
   const [conversationState, setConversationState] = useState("in-reveal");
+  const { scrollToSection } = useScroll();
 
   useEffect(() => {
     if (playerRef.current) {
@@ -36,19 +39,17 @@ export default function AppBar() {
           </div>
           <div className="hidden md:block md:w-[90%] text-foreground">
             <div className="ml-0 flex justify-end items-center md:space-x-0 lg:space-x-2 xl:space-x-4">
-              {navItems.map((item) => (
+              {sections.map((section, index) => (
                 <Button
-                  key={item.name}
+                  key={section}
                   variant="link"
                   className="group text-foreground hover:no-underline group relative px-2 py-1 transition-all duration-300 ease-in-out"
-                  asChild
+                  onClick={() => scrollToSection(index)}
                 >
-                  <Link href={item.id}>
-                    <span className="relative text-[1rem]">
-                      {item.name}
-                      <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-primary transition-all duration-500 ease-in-out group-hover:w-full group-focus:w-full"></span>
-                    </span>
-                  </Link>
+                  <span className="relative text-[1rem]">
+                    {section.charAt(0).toUpperCase() + section.slice(1)}
+                    <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-primary transition-all duration-500 ease-in-out group-hover:w-full group-focus:w-full"></span>
+                  </span>
                 </Button>
               ))}
             </div>
@@ -85,14 +86,16 @@ export default function AppBar() {
               <SheetContent side="right" className="w-[240px] sm:w-[300px]">
                 <div className="mt-6 flow-root">
                   <div className="flex flex-col space-y-2">
-                    {navItems.map((item) => (
+                    {sections.map((section, index) => (
                       <Button
-                        key={item.name}
+                        key={section}
                         variant="ghost"
-                        asChild
-                        onClick={() => setIsMenuOpen(false)}
+                        onClick={() => {
+                          setIsMenuOpen(false);
+                          scrollToSection(index);
+                        }}
                       >
-                        <Link href={item.id}>{item.name}</Link>
+                        {section.charAt(0).toUpperCase() + section.slice(1)}
                       </Button>
                     ))}
                     <Button className="rounded-lg shadow-md bg-primary text-background hover:bg-foreground hover:text-background">

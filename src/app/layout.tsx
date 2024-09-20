@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ThemeProvider from "@/components/Theme/ThemeProvider";
 import AppBar from "@/components/layout/AppBar";
+import { ScrollProvider } from "@/components/layout/ScrollProvider";
+import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -15,12 +17,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className="bg-foreground mx-1 md:mx-4 my-2">
+      <body className="w-screen h-screen bg-background rounded-xl ">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <div className="w-full h-[98vh] bg-background rounded-xl pt-4 flex flex-col">
-            <AppBar />
-            <main className="flex-grow overflow-x-hidden">{children}</main>
-          </div>
+          <ScrollProvider>
+            <div className="flex flex-col">
+              <AppBar />
+              <main className="flex-grow md:overflow-x-auto md:overflow-y-hidden overflow-x-hidden overflow-y-auto flex scroll-smooth snap-x snap-mandatory">
+                {children}
+              </main>
+              <Footer />
+            </div>
+          </ScrollProvider>
         </ThemeProvider>
       </body>
     </html>

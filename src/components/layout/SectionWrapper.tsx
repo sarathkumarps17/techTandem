@@ -1,5 +1,7 @@
 "use client";
-import React, { useEffect } from "react";
+
+import React, { useEffect, useRef } from "react";
+import { useScroll } from "@/components/layout/ScrollProvider";
 
 interface SectionWrapperProps {
   id: string;
@@ -7,8 +9,15 @@ interface SectionWrapperProps {
 }
 
 export function SectionWrapper({ id, children }: SectionWrapperProps) {
+  const { registerSection } = useScroll();
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    registerSection(id, sectionRef);
+  }, [id, registerSection]);
+
   return (
-    <section id={id} className="snap-center w-full flex-shrink-0">
+    <section ref={sectionRef} id={id} className="w-full h-full flex-shrink-0">
       {children}
     </section>
   );
