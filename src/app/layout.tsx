@@ -22,7 +22,7 @@ export default function RootLayout({
           <ScrollProvider>
             <div className="flex flex-col">
               <AppBar />
-              <main className="flex-grow md:overflow-x-auto md:overflow-y-hidden overflow-x-hidden overflow-y-auto flex scroll-smooth snap-x snap-mandatory">
+              <main className="flex-grow md:overflow-x-auto md:overflow-y-hidden  overflow-y-auto flex scroll-smooth snap-x snap-mandatory no-scrollbar">
                 {children}
               </main>
               <Footer />
