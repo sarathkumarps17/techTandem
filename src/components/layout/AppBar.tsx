@@ -8,7 +8,7 @@ import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import ThemeSwitch from "../Theme/ThemeSwitch";
 
 import { useScroll } from "./ScrollProvider";
-import { SessionContextValue, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 import ChatButton from "../chat/ChatButton";
 

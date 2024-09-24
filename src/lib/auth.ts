@@ -9,7 +9,7 @@ const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
 const gitlabClientId = process.env.GITLAB_CLIENT_ID;
 const gitlabClientSecret = process.env.GITLAB_CLIENT_SECRET;
 
-console.log({ googleClientId, googleClientSecret, gitlabClientId, gitlabClientSecret });
+
 
 const authOptions: AuthOptions = {
     providers: [
@@ -22,6 +22,15 @@ const authOptions: AuthOptions = {
             clientSecret: gitlabClientSecret!,
         })
     ],
+
+    callbacks: {
+        async signIn({ user, account, profile, email, credentials }) {
+            console.log({ user, account, profile, email, credentials });
+            return true;
+        },
+
+    },
+    secret: process.env.NEXTAUTH_SECRET,
 }
 
 /**

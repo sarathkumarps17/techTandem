@@ -13,7 +13,8 @@ import {
 } from "@/components/ui/hover-card";
 import { SessionContextValue } from "next-auth/react";
 import { Skeleton } from "../ui/skeleton";
-import Auth from "../auth/Auth";
+import SignIn from "../auth/SignIn";
+import SignOut from "../auth/SignOut";
 
 interface ButtonProps {
   sessionData: Pick<SessionContextValue, "data" | "status">;
@@ -40,29 +41,40 @@ const ChatButton = ({ sessionData, onClick, isMobile }: ButtonProps) => {
         playerRef.current.play();
       }
     }, [conversationState, theme]);
-    if (isMobile)
-      return (
-        <Button className="rounded-lg shadow-md bg-primary text-background hover:bg-foreground hover:text-background">
-          Say &quot;Hi&quot;
-        </Button>
-      );
+
     return (
-      <Button
-        aria-label="Open conversation"
-        size="sm"
-        variant="link"
-        className="ml-0 lg:ml-10 text-foreground xl:ml-16 hover:border-primary border-foreground hover:text-primary"
-        onMouseEnter={() => setConversationState("conversation-alt")}
-        onMouseLeave={() => setConversationState("in-reveal")}
-      >
-        <Player
-          colors={isDark ? "primary:#fefbf6" : "primary:#1f1f1f"}
-          icon={CONVERSATION}
-          size={36}
-          ref={playerRef}
-          state={conversationState}
-        />
-      </Button>
+      <HoverCard>
+        <HoverCardTrigger asChild>
+          {isMobile ? (
+            <Button className="rounded-lg shadow-md bg-primary text-background hover:bg-foreground hover:text-background">
+              Say &quot;Hi&quot;
+            </Button>
+          ) : (
+            <Button
+              aria-label="Open conversation"
+              size="sm"
+              variant="link"
+              className="ml-0 lg:ml-10 text-foreground xl:ml-16 hover:border-primary border-foreground hover:text-primary"
+              onMouseEnter={() => setConversationState("conversation-alt")}
+              onMouseLeave={() => setConversationState("in-reveal")}
+            >
+              <Player
+                colors={isDark ? "primary:#fefbf6" : "primary:#1f1f1f"}
+                icon={CONVERSATION}
+                size={36}
+                ref={playerRef}
+                state={conversationState}
+              />
+            </Button>
+          )}
+        </HoverCardTrigger>
+        <HoverCardContent className="blur-bg">
+          <p className="text-sm text-foreground/50 text-center text-wrap my-2">
+            Click to chat with me! Or you can
+          </p>
+          <SignOut />
+        </HoverCardContent>
+      </HoverCard>
     );
   };
   const AuthButton = () => {
@@ -102,11 +114,11 @@ const ChatButton = ({ sessionData, onClick, isMobile }: ButtonProps) => {
             </Button>
           )}
         </HoverCardTrigger>
-        <HoverCardContent className="backdrop-blur-sm bg-black/30 dark:bg-white/30 rounded-lg">
+        <HoverCardContent className="blur-bg">
           <p className="text-sm text-foreground/50 text-center">
             Please sign in to chat
           </p>
-          <Auth />
+          <SignIn />
         </HoverCardContent>
       </HoverCard>
     );

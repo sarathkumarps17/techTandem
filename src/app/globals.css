@@ -124,3 +124,7 @@
   transform-origin: 70% 70%;
   display: inline-block;
 }
+
+.blur-bg {
+  @apply backdrop-blur-sm bg-black/10 dark:bg-white/10 rounded-lg;
+}

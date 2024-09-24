@@ -6,6 +6,7 @@ import SessionProvider from "@/components/Providers/SessionProvider";
 import AppBar from "@/components/layout/AppBar";
 import { ScrollProvider } from "@/components/layout/ScrollProvider";
 import Footer from "@/components/layout/Footer";
+import { AuthStoreProvider } from "@/components/Providers/StoreProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -22,17 +23,19 @@ export default async function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <body className="w-screen h-screen bg-background rounded-xl ">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <SessionProvider session={session}>
-            <ScrollProvider>
-              <div className="flex flex-col">
-                <AppBar />
-                <main className="flex-grow md:overflow-x-auto md:overflow-y-hidden  overflow-y-auto flex scroll-smooth snap-x snap-mandatory no-scrollbar">
-                  {children}
-                </main>
-                <Footer />
-              </div>
-            </ScrollProvider>
-          </SessionProvider>
+          <AuthStoreProvider>
+            <SessionProvider session={session}>
+              <ScrollProvider>
+                <div className="flex flex-col">
+                  <AppBar />
+                  <main className="flex-grow md:overflow-x-auto md:overflow-y-hidden  overflow-y-auto flex scroll-smooth snap-x snap-mandatory no-scrollbar">
+                    {children}
+                  </main>
+                  <Footer />
+                </div>
+              </ScrollProvider>
+            </SessionProvider>
+          </AuthStoreProvider>
         </ThemeProvider>
       </body>
     </html>
