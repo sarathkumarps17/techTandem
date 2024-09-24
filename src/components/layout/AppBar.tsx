@@ -1,32 +1,24 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { Menu, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import ThemeSwitch from "../Theme/ThemeSwitch";
-import { Player } from "@lordicon/react";
-import CONVERSATION from "@/assets/conversation.json";
-import { useTheme } from "next-themes";
+
 import { useScroll } from "./ScrollProvider";
+import { SessionContextValue, useSession } from "next-auth/react";
+
+import ChatButton from "../chat/ChatButton";
 
 const sections = ["story", "works", "skills", "certifications", "connect"];
 
 export default function AppBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const playerRef = useRef<Player>(null);
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-  const [conversationState, setConversationState] = useState("in-reveal");
+
   const { scrollToSection } = useScroll();
-
-  useEffect(() => {
-    if (playerRef.current) {
-      playerRef.current.play();
-    }
-  }, [conversationState, theme]);
-
+  const session = useSession();
   return (
     <nav className="border-b shadow-slate-200 shadow-sm dark:shadow-black bg-background text-primary sticky top-0 z-10">
       <div className="max-w-7xl mx-auto px-2 md:px-4 lg:px-8">
@@ -54,22 +46,12 @@ export default function AppBar() {
               ))}
             </div>
           </div>
-          <Button
-            aria-label="Open conversation"
-            size="sm"
-            variant="link"
-            className="ml-0 lg:ml-10 text-foreground xl:ml-16 hidden md:block hover:border-primary border-foreground hover:text-primary"
-            onMouseEnter={() => setConversationState("conversation-alt")}
-            onMouseLeave={() => setConversationState("in-reveal")}
-          >
-            <Player
-              colors={isDark ? "primary:#FFFFFF" : "primary:#000000"}
-              icon={CONVERSATION}
-              size={32}
-              ref={playerRef}
-              state={conversationState}
+          <div className="md:flex hidden items-center">
+            <ChatButton
+              sessionData={session}
+              onClick={() => console.log("clicked")}
             />
-          </Button>
+          </div>
 
           <div className="flex flex-auto justify-end items-center mr-1">
             <ThemeSwitch />
@@ -98,9 +80,11 @@ export default function AppBar() {
                         {section.charAt(0).toUpperCase() + section.slice(1)}
                       </Button>
                     ))}
-                    <Button className="rounded-lg shadow-md bg-primary text-background hover:bg-foreground hover:text-background">
-                      Say &quot;Hi&quot;
-                    </Button>
+                    <ChatButton
+                      sessionData={session}
+                      onClick={() => console.log("clicked")}
+                      isMobile
+                    />
                   </div>
                 </div>
               </SheetContent>
