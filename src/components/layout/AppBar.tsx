@@ -11,13 +11,13 @@ import { useScroll } from "./ScrollProvider";
 import { useSession } from "next-auth/react";
 
 import ChatButton from "../chat/ChatButton";
-
-const sections = ["story", "works", "skills", "certifications", "connect"];
+import sections from "./Sections";
+import { cn } from "@/lib/utils";
 
 export default function AppBar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-  const { scrollToSection } = useScroll();
+  const { scrollToSection, activeSection } = useScroll();
   const session = useSession();
   return (
     <nav className="border-b shadow-slate-200 shadow-sm dark:shadow-black bg-background text-primary sticky top-0 z-10">
@@ -33,14 +33,19 @@ export default function AppBar() {
             <div className="ml-0 flex justify-end items-center md:space-x-0 lg:space-x-2 xl:space-x-4">
               {sections.map((section, index) => (
                 <Button
-                  key={section}
+                  key={section.order}
                   variant="link"
                   className="group text-foreground hover:no-underline group relative px-2 py-1 transition-all duration-300 ease-in-out"
                   onClick={() => scrollToSection(index)}
                 >
                   <span className="relative text-[1rem]">
-                    {section.charAt(0).toUpperCase() + section.slice(1)}
-                    <span className="absolute bottom-0 left-0 h-0.5 w-0 bg-primary transition-all duration-500 ease-in-out group-hover:w-full group-focus:w-full"></span>
+                    {section.id.charAt(0).toUpperCase() + section.id.slice(1)}
+                    <span
+                      className={cn(
+                        "absolute bottom-0 left-0 h-0.5 w-0 bg-primary transition-all duration-500 ease-in-out group-hover:w-full group-focus:w-full",
+                        section.order === activeSection ? "w-full" : "w-0"
+                      )}
+                    ></span>
                   </span>
                 </Button>
               ))}
@@ -70,14 +75,15 @@ export default function AppBar() {
                   <div className="flex flex-col space-y-2">
                     {sections.map((section, index) => (
                       <Button
-                        key={section}
+                        key={section.order}
                         variant="ghost"
                         onClick={() => {
                           setIsMenuOpen(false);
                           scrollToSection(index);
                         }}
                       >
-                        {section.charAt(0).toUpperCase() + section.slice(1)}
+                        {section.id.charAt(0).toUpperCase() +
+                          section.id.slice(1)}
                       </Button>
                     ))}
                     <ChatButton

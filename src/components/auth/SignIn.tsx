@@ -36,14 +36,14 @@ const SignIn = () => {
       <Button
         onClick={() => handleSignIn("github")}
         variant="outline"
-        className="w-full"
+        className="w-full active:bg-background/60"
       >
         <GitHubLogoIcon className="mx-2" /> GitHub
       </Button>
       <Button
         onClick={() => handleSignIn("google")}
         color="primary"
-        className="w-full hover:bg-foreground hover:text-background"
+        className="w-full hover:bg-red-300 hover:text-background active:bg-primary"
       >
         <Image
           src={GoogleIcon}
